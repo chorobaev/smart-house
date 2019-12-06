@@ -6,7 +6,9 @@ import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import io.aikosoft.smarthouse.R
 import io.aikosoft.smarthouse.base.BaseActivity
+import io.aikosoft.smarthouse.ui.mount.MountActivity
 import io.aikosoft.smarthouse.utility.makeShortToast
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
 
@@ -53,6 +55,20 @@ class MainActivity : BaseActivity() {
                 makeShortToast("${response?.error}")
                 finish()
             }
+        }
+    }
+
+    override fun initOnClicks() {
+        super.initOnClicks()
+
+        fab_mount.setOnClickListener {
+            startMountActivity()
+        }
+    }
+
+    private fun startMountActivity() {
+        Intent(this, MountActivity::class.java).also {
+            startActivity(it)
         }
     }
 

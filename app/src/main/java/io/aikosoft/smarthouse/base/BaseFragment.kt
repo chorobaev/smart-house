@@ -21,6 +21,11 @@ abstract class BaseFragment : DaggerFragment(), Logger {
     @get:LayoutRes
     protected abstract val layoutRes: Int
 
+    protected open fun initViewModel() {}
+    protected open fun initUI(firstInit: Boolean) {}
+    protected open fun observeViewModel() {}
+    protected open fun initOnClicks() {}
+
     val baseActivity: AppCompatActivity
         get() = activity!!
 
@@ -30,6 +35,15 @@ abstract class BaseFragment : DaggerFragment(), Logger {
         savedInstanceState: Bundle?
     ): View? =
         inflater.inflate(layoutRes, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initViewModel()
+        initUI(savedInstanceState == null)
+        observeViewModel()
+        initOnClicks()
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

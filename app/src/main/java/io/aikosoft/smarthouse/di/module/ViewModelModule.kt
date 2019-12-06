@@ -9,6 +9,7 @@ import io.aikosoft.smarthouse.base.CommonViewModel
 import io.aikosoft.smarthouse.base.ViewModelFactory
 import io.aikosoft.smarthouse.di.util.ViewModelKey
 import io.aikosoft.smarthouse.ui.main.MainViewModel
+import io.aikosoft.smarthouse.ui.mount.MountViewModel
 
 @Module
 abstract class ViewModelModule {
@@ -22,6 +23,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MainViewModel::class)
     abstract fun bindMainViewModel(mainViewModel: MainViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MountViewModel::class)
+    abstract fun bindMountViewModel(mountViewModel: MountViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

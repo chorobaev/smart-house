@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Smart House</string>
+    <string name="mount_hint_module_id">Module</string>
+    <string name="mount_btn_mount">Mount</string>
+    <string name="location_rational">App needs coars location in order to get information about WiFi s.</string>
+    <string name="error_network_disconnected">Module disconnected</string>
 </resources>
