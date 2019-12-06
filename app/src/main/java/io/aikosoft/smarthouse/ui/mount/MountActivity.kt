@@ -3,6 +3,7 @@ package io.aikosoft.smarthouse.ui.mount
 import android.Manifest
 import android.content.Context
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
@@ -39,6 +40,8 @@ class MountActivity : BaseActivity() {
         if (firstInit) {
             supportFragmentManager.beginTransaction().add(R.id.fm_container, ConnectionFragment())
                 .commit()
+            supportFragmentManager.beginTransaction().addToBackStack("Connection").commit()
+
         }
 
         requestPermissions()
@@ -138,14 +141,20 @@ class MountActivity : BaseActivity() {
                 this@MountActivity.disconnectFromWiFi()
             })
 
+            moduleIsConfigured.observe(lifeOwner, Observer {
+                makeShortToast("WiFi setting configured!")
+                goToSetUpFragment()
+            })
+
             moduleMounted.observe(lifeOwner, Observer {
-                makeShortToast("Module is mount!")
+                makeShortToast("Module is mounted!")
+                finish()
             })
         }
     }
 
     private fun connectToWiFi(moduleName: String) {
-        log("Connecting to wifi")
+        log("Connecting to wifi. Status: $wifiStatus")
         try {
             wiFiReceiverManager?.connectWifi(moduleName, MODULE_PASSWORD)
         } catch (e: NullPointerException) {
@@ -159,20 +168,27 @@ class MountActivity : BaseActivity() {
         }
     }
 
-    private fun goToConfigFragment() {
-        supportFragmentManager.beginTransaction().addToBackStack("Connection")
-            .replace(R.id.fm_container, ConfigureFragment()).commit()
-    }
-
     private fun wifiConnected() {
+        makeShortToast("Connected!")
         log("wifiConnected")
         viewModel.setLoading(false)
         goToConfigFragment()
     }
 
+    private fun goToConfigFragment() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fm_container, ConfigureFragment()).commit()
+    }
+
+    private fun goToSetUpFragment() {
+        wiFiReceiverManager?.disconnectFromWifi()
+        supportFragmentManager.beginTransaction().addToBackStack("Configure")
+            .replace(R.id.fm_container, SetupFragment())
+            .commit()
+    }
+
     private fun wifiDisconnected() {
         log("wifiDisconnected")
         viewModel.setLoading(false)
-        supportFragmentManager.popBackStack()
     }
 }

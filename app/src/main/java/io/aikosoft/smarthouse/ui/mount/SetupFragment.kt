@@ -4,19 +4,21 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import io.aikosoft.smarthouse.R
 import io.aikosoft.smarthouse.base.BaseFragment
+import io.aikosoft.smarthouse.utility.makeShortToast
 import io.aikosoft.smarthouse.utility.toVisibility
-import kotlinx.android.synthetic.main.fragment_connection.*
+import kotlinx.android.synthetic.main.fragment_setup.*
 
-class ConnectionFragment : BaseFragment() {
+class SetupFragment : BaseFragment() {
 
     private lateinit var viewModel: MountViewModel
 
     override val layoutRes: Int
-        get() = R.layout.fragment_connection
+        get() = R.layout.fragment_setup
 
 
     override fun initViewModel() {
         super.initViewModel()
+
         viewModel = getViewModel()
     }
 
@@ -24,24 +26,27 @@ class ConnectionFragment : BaseFragment() {
         super.observeViewModel()
         val lifeOwner = this as LifecycleOwner
         with(viewModel) {
-            permissionsGranted.observe(lifeOwner, Observer {
-                onPermissionsGranted()
-            })
-
             loading.observe(lifeOwner, Observer {
                 pb_loading.visibility = it.toVisibility()
             })
         }
     }
 
-    private fun onPermissionsGranted() {
-        bt_connect.isEnabled = true
-    }
-
     override fun initOnClicks() {
         super.initOnClicks()
         bt_connect.setOnClickListener {
-            viewModel.connectToModule(et_module_id.text.toString())
+            if (validate()) {
+                viewModel.mountModule()
+            }
         }
+    }
+
+    private fun validate(): Boolean {
+        val name = et_module_name.text.toString()
+        if (name.isEmpty()) {
+            baseActivity.makeShortToast("Define name of the module")
+            return false
+        }
+        return true
     }
 }
