@@ -106,7 +106,7 @@ class WiFiReceiverManager(private val application: Application, lifecycle: Lifec
 
     fun connectWifi(ssid: String, password: String) {
 
-        if (TextUtils.isEmpty(ssid)) {
+        if (ssid.isEmpty() || password.isEmpty()) {
             log("onReceive: cannot use connection without passing in a proper wifi SSID and password.")
             return
         }

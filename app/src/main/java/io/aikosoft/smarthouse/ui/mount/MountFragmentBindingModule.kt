@@ -8,4 +8,7 @@ abstract class MountFragmentBindingModule {
 
     @ContributesAndroidInjector
     abstract fun bindConnectionFragment(): ConnectionFragment
+
+    @ContributesAndroidInjector
+    abstract fun bindConfigureFragment(): ConfigureFragment
 }

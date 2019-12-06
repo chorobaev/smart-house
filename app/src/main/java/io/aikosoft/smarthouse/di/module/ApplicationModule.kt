@@ -4,6 +4,8 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
+import io.aikosoft.smarthouse.data.rest.ModuleClient
+import io.aikosoft.smarthouse.utility.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -42,4 +44,14 @@ class ApplicationModule {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(gson))
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(retrofitBuilder: Retrofit.Builder): Retrofit =
+        retrofitBuilder.baseUrl(BASE_URL).build()
+
+    @Provides
+    @Singleton
+    fun provideModuleClient(retrofit: Retrofit): ModuleClient =
+        retrofit.create(ModuleClient::class.java)
 }

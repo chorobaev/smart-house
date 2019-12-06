@@ -4,4 +4,6 @@
     <string name="mount_btn_mount">Mount</string>
     <string name="location_rational">App needs coars location in order to get information about WiFi s.</string>
     <string name="error_network_disconnected">Module disconnected</string>
+    <string name="config_hint_ssid">WiFi name</string>
+    <string name="config_hint_password">Password</string>
 </resources>

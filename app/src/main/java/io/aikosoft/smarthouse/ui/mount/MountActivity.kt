@@ -13,7 +13,9 @@ import io.aikosoft.smarthouse.base.BaseActivity
 import io.aikosoft.smarthouse.data.models.WiFiResponse
 import io.aikosoft.smarthouse.data.models.WiFiStatus
 import io.aikosoft.smarthouse.utility.ConnectionLiveData
+import io.aikosoft.smarthouse.utility.MODULE_PASSWORD
 import io.aikosoft.smarthouse.utility.WiFiReceiverManager
+import io.aikosoft.smarthouse.utility.makeShortToast
 
 class MountActivity : BaseActivity() {
 
@@ -129,21 +131,23 @@ class MountActivity : BaseActivity() {
         val lifeOwner = this as LifecycleOwner
         with(viewModel) {
             shouldConnectToWiFi.observe(lifeOwner, Observer {
-                this@MountActivity.connectToWiFi()
+                it?.let { this@MountActivity.connectToWiFi(it) }
             })
 
             shouldDisconnectFromWiFi.observe(lifeOwner, Observer {
                 this@MountActivity.disconnectFromWiFi()
             })
+
+            moduleMounted.observe(lifeOwner, Observer {
+                makeShortToast("Module is mount!")
+            })
         }
     }
 
-    private fun connectToWiFi() {
+    private fun connectToWiFi(moduleName: String) {
         log("Connecting to wifi")
         try {
-            //if (wiFiReceiverManager != null && wifiStatus != WiFiStatus.CONNECTED && wifiStatus != WiFiStatus.CONNECTING) {
-            wiFiReceiverManager?.connectWifi("B_2", "1718engineer1718")
-            // }
+            wiFiReceiverManager?.connectWifi(moduleName, MODULE_PASSWORD)
         } catch (e: NullPointerException) {
             log("${e.message}")
         }
@@ -155,13 +159,20 @@ class MountActivity : BaseActivity() {
         }
     }
 
+    private fun goToConfigFragment() {
+        supportFragmentManager.beginTransaction().addToBackStack("Connection")
+            .replace(R.id.fm_container, ConfigureFragment()).commit()
+    }
+
     private fun wifiConnected() {
         log("wifiConnected")
         viewModel.setLoading(false)
+        goToConfigFragment()
     }
 
     private fun wifiDisconnected() {
         log("wifiDisconnected")
         viewModel.setLoading(false)
+        supportFragmentManager.popBackStack()
     }
 }

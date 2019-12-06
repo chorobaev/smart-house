@@ -4,15 +4,16 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import io.aikosoft.smarthouse.R
 import io.aikosoft.smarthouse.base.BaseFragment
+import io.aikosoft.smarthouse.utility.makeShortToast
 import io.aikosoft.smarthouse.utility.toVisibility
-import kotlinx.android.synthetic.main.fragment_connection.*
+import kotlinx.android.synthetic.main.fragment_configure.*
 
-class ConnectionFragment : BaseFragment() {
+class ConfigureFragment : BaseFragment() {
 
     private lateinit var viewModel: MountViewModel
 
     override val layoutRes: Int
-        get() = R.layout.fragment_connection
+        get() = R.layout.fragment_configure
 
 
     override fun initViewModel() {
@@ -20,28 +21,30 @@ class ConnectionFragment : BaseFragment() {
         viewModel = getViewModel()
     }
 
+    override fun initOnClicks() {
+        super.initOnClicks()
+        bt_send.setOnClickListener {
+            if (!validate()) return@setOnClickListener
+            viewModel.sendSsidAndPassword(et_ssid.text.toString(), et_password.text.toString())
+        }
+    }
+
     override fun observeViewModel() {
         super.observeViewModel()
         val lifeOwner = this as LifecycleOwner
         with(viewModel) {
-            permissionsGranted.observe(lifeOwner, Observer {
-                onPermissionsGranted()
-            })
-
             loading.observe(lifeOwner, Observer {
                 pb_loading.visibility = it.toVisibility()
             })
         }
     }
 
-    private fun onPermissionsGranted() {
-        bt_mount.isEnabled = true
-    }
-
-    override fun initOnClicks() {
-        super.initOnClicks()
-        bt_mount.setOnClickListener {
-            viewModel.connectToModule(et_module_id.text.toString())
+    private fun validate(): Boolean {
+        val ssid = et_ssid.text.toString()
+        if (ssid.isEmpty()) {
+            baseActivity.makeShortToast("Provide WiFi name!")
+            return false
         }
+        return true
     }
 }

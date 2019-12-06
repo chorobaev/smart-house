@@ -7,19 +7,39 @@
     android:gravity="center"
     android:orientation="vertical">
 
+
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/et_module_id_frame"
+        android:id="@+id/et_ssid_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toTopOf="@id/bt_mount">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_module_id"
+            android:id="@+id/et_ssid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Smart House Liz"
-            android:hint="@string/mount_hint_module_id"
+            android:text="Redmi 5"
+            android:hint="@string/config_hint_ssid"
+            tools:ignore="Autofill" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/et_password_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@id/bt_mount">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="mypassword"
+            android:hint="@string/config_hint_password"
             tools:ignore="Autofill" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -37,9 +57,10 @@
         app:layout_constraintBottom_toTopOf="@id/bt_mount" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt_mount"
+        android:id="@+id/bt_send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/mount_btn_mount"
