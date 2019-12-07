@@ -9,8 +9,10 @@ import io.aikosoft.smarthouse.data.models.ModuleType
 import io.aikosoft.smarthouse.data.rest.ModuleClient
 import io.aikosoft.smarthouse.utility.Logger
 import io.reactivex.Single
+import io.reactivex.SingleEmitter
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.math.sin
 
 @Singleton
 class ModuleRepository @Inject constructor(
@@ -32,15 +34,26 @@ class ModuleRepository @Inject constructor(
             log("Setting ${module.name} to firebase.")
             val uid = firebaseAuth.uid ?: single.onError(Throwable("Not signed in!"))
             firebaseDatabase.getReference("users/$uid/modules").push()
-                .setValue(module.name)
+                .setValue(module.id)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        single.onSuccess(Unit)
+                        module.create(single)
                     } else {
                         single.onError(Throwable(it.exception))
                     }
                 }
         }
+
+    private fun ModuleSmartHouseLiz.create(single: SingleEmitter<Unit>) {
+        firebaseDatabase.getReference("modules/$id").setValue(this)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    single.onSuccess(Unit)
+                } else {
+                    single.onError(Throwable(it.exception))
+                }
+            }
+    }
 
     private fun <M> Task<M>.asSeingle(module: M): Single<M> =
         Single.create { single ->

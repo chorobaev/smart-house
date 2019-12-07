@@ -36,7 +36,7 @@ class SetupFragment : BaseFragment() {
         super.initOnClicks()
         bt_connect.setOnClickListener {
             if (validate()) {
-                viewModel.mountModule()
+                viewModel.mountModule(et_module_name.text.toString())
             }
         }
     }

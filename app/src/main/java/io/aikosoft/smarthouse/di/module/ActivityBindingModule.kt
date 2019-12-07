@@ -2,6 +2,7 @@ package io.aikosoft.smarthouse.di.module
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import io.aikosoft.smarthouse.ui.detail.DetailActivity
 import io.aikosoft.smarthouse.ui.main.MainActivity
 import io.aikosoft.smarthouse.ui.mount.MountActivity
 import io.aikosoft.smarthouse.ui.mount.MountFragmentBindingModule
@@ -14,4 +15,7 @@ abstract class ActivityBindingModule {
 
     @ContributesAndroidInjector(modules = [MountFragmentBindingModule::class])
     abstract fun bindMountActivity(): MountActivity
+
+    @ContributesAndroidInjector
+    abstract fun bindDetailActivity(): DetailActivity
 }

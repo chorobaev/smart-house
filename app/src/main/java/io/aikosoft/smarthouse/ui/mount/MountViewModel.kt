@@ -29,7 +29,7 @@ class MountViewModel @Inject constructor(
     }
 
     fun connectToModule(moduleName: String) {
-        module = module.copy(name = moduleName)
+        module = module.copy(id = moduleName)
         _moduleName.value = moduleName
     }
 
@@ -47,7 +47,9 @@ class MountViewModel @Inject constructor(
         }
     }
 
-    fun mountModule() {
+    fun mountModule(name: String) {
+        module = module.copy(name = name)
+        log("Putting module: $module")
         moduleRepository.mountModule(module).request {
             _moduleMounted.call()
         }
