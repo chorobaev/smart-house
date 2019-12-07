@@ -20,7 +20,6 @@
             android:id="@+id/et_ssid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Redmi 5"
             android:hint="@string/config_hint_ssid"
             tools:ignore="Autofill" />
 
@@ -38,7 +37,6 @@
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="mypassword"
             android:hint="@string/config_hint_password"
             tools:ignore="Autofill" />
 

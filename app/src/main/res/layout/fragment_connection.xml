@@ -18,7 +18,6 @@
             android:id="@+id/et_module_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="SmartHouseLiz1"
             android:hint="@string/mount_hint_module_id"
             tools:ignore="Autofill" />
 

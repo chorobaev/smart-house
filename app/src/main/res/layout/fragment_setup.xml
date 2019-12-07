@@ -19,7 +19,6 @@
             android:id="@+id/et_module_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="My room"
             android:hint="@string/config_hint_password"
             tools:ignore="Autofill" />
 
