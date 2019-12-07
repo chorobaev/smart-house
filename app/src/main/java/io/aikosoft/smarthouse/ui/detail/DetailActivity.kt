@@ -53,7 +53,8 @@ class DetailActivity : BaseActivity() {
     }
 
     private fun updateTemperature(temperature: String) {
-        tv_temperature.text = temperature
+        val temp = "$temperature°C"
+        tv_temperature.text = temp
     }
 
     private fun updateHumidity(humidity: String) {
