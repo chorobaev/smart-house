@@ -12,14 +12,13 @@ import io.reactivex.Single
 import io.reactivex.SingleEmitter
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.math.sin
 
 @Singleton
 class ModuleRepository @Inject constructor(
     private val moduleClient: ModuleClient,
     private val firebaseDatabase: FirebaseDatabase,
     private val firebaseAuth: FirebaseAuth
-): Logger {
+) : Logger {
     fun setSsidAndPassword(ssid: String, password: String): Single<String> =
         moduleClient.sendWiFi(ssid, password)
 
@@ -33,8 +32,7 @@ class ModuleRepository @Inject constructor(
         Single.create { single ->
             log("Setting ${module.name} to firebase.")
             val uid = firebaseAuth.uid ?: single.onError(Throwable("Not signed in!"))
-            firebaseDatabase.getReference("users/$uid/modules").push()
-                .setValue(module.id)
+            firebaseDatabase.getReference("users/$uid/modules/${module.id}").setValue(true)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
                         module.create(single)

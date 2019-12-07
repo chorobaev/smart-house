@@ -105,8 +105,10 @@ class UserRepository @Inject constructor(
                 override fun onDataChange(p0: DataSnapshot) {
                     val moduleIds = ArrayList<String>()
                     for (dsh in p0.children) {
-                        dsh.getValue(String::class.java)?.let {
-                            moduleIds.add(it)
+                        dsh.getValue(Boolean::class.java)?.let { canAccess ->
+                            if (canAccess) {
+                                dsh.key?.let { moduleIds.add(it) }
+                            }
                         }
                     }
                     data.value = moduleIds
@@ -117,25 +119,28 @@ class UserRepository @Inject constructor(
 
     fun getAllModules(moduleIds: List<String>): LiveData<List<ModuleSmartHouseLiz>> {
         val data = MutableLiveData<List<ModuleSmartHouseLiz>>()
+        data.value = ArrayList()
 
-        firebaseDatabase.getReference("modules/")
-            .addValueEventListener(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) {
+        for (id in moduleIds) {
+            firebaseDatabase.getReference("modules/$id")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onCancelled(p0: DatabaseError) {
 
-                }
+                    }
 
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val modules = ArrayList<ModuleSmartHouseLiz>()
-                    for (dsh in dataSnapshot.children) {
-                        if (moduleIds.contains(dsh.key)) {
-                            dsh.getValue(ModuleSmartHouseLiz::class.java)?.let {
-                                modules.add(it)
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        dataSnapshot.getValue(ModuleSmartHouseLiz::class.java)?.let { module ->
+                            data.value?.let { prevModules ->
+                                val arrayList = ArrayList<ModuleSmartHouseLiz>()
+                                arrayList.addAll(prevModules)
+                                arrayList.add(module)
+                                data.value = arrayList
                             }
                         }
                     }
-                    data.value = modules
-                }
-            })
+                })
+        }
+
         return data
     }
 }
