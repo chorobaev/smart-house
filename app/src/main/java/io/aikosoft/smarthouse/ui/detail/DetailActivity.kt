@@ -1,5 +1,6 @@
 package io.aikosoft.smarthouse.ui.detail
 
+import android.view.View.GONE
 import android.widget.CompoundButton
 import androidx.lifecycle.Observer
 import io.aikosoft.smarthouse.R
@@ -14,8 +15,7 @@ class DetailActivity : BaseActivity() {
     private lateinit var viewModel: DetailViewModel
     private var moduleId: String? = null
 
-    override val layoutRes: Int
-        get() = R.layout.activity_detail
+    override val layoutRes: Int get() = R.layout.activity_detail
 
     override fun initViewModel() {
         super.initViewModel()
@@ -41,6 +41,7 @@ class DetailActivity : BaseActivity() {
     }
 
     private fun updateUI(module: ModuleSmartHouseLiz) {
+        progress_bar.visibility = GONE
         with(module) {
             title = name
             tv_humidity.text = humidity
@@ -86,7 +87,6 @@ class DetailActivity : BaseActivity() {
             })
         }
     }
-
 
     companion object {
         const val EXTRA_MODEL_ID = "io.aikosoft.smarthouse.module_id"

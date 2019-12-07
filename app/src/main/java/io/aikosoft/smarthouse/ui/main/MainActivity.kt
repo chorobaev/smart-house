@@ -2,13 +2,16 @@ package io.aikosoft.smarthouse.ui.main
 
 import android.app.Activity
 import android.content.Intent
+import android.view.View.GONE
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import io.aikosoft.smarthouse.R
 import io.aikosoft.smarthouse.base.BaseActivity
+import io.aikosoft.smarthouse.data.models.ModuleSmartHouseLiz
 import io.aikosoft.smarthouse.ui.detail.DetailActivity
 import io.aikosoft.smarthouse.ui.main.adapter.ModulRVAdapter
 import io.aikosoft.smarthouse.ui.mount.MountActivity
@@ -65,14 +68,19 @@ class MainActivity : BaseActivity() {
     private fun fetchModules() {
         log("Fetching modules")
         viewModel.modules.observe(this, Observer {
-            it?.let { moduleRVAdapter.updateModules(it) }
+            it?.let { onModulesFetched(it) }
         })
+    }
+
+    private fun onModulesFetched(modules: List<ModuleSmartHouseLiz>) {
+        progress_bar.visibility = GONE
+        moduleRVAdapter.updateModules(modules)
     }
 
     private fun initRecyclerView() {
         moduleRVAdapter = ModulRVAdapter()
         moduleRVAdapter.setOnModuleClickListener {
-            startDetilaActivity(it.moduleId)
+            startDetailActivity(it.moduleId)
         }
 
         recycler_view.run {
@@ -107,7 +115,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun startDetilaActivity(moduleId: String) {
+    private fun startDetailActivity(moduleId: String) {
         Intent(this, DetailActivity::class.java).also {
             it.putExtra(DetailActivity.EXTRA_MODEL_ID, moduleId)
             startActivity(it)
