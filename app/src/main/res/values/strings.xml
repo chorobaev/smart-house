@@ -6,4 +6,10 @@
     <string name="error_network_disconnected">Module disconnected</string>
     <string name="config_hint_ssid">WiFi name</string>
     <string name="config_hint_password">Password</string>
+    <string name="mount_btn_set">Set</string>
+    <string name="mount_btn_connect">Connect</string>
+    <string name="detail_msg_switch_1">Switch 1</string>
+    <string name="detail_msg_switch_2">Switch 2</string>
+    <string name="detail_msg_humidity">Humidity:</string>
+    <string name="detail_msg_temperature">Temperature:</string>
 </resources>

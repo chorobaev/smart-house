@@ -11,4 +11,7 @@ abstract class MountFragmentBindingModule {
 
     @ContributesAndroidInjector
     abstract fun bindConfigureFragment(): ConfigureFragment
+
+    @ContributesAndroidInjector
+    abstract fun bindSetupFragment(): SetupFragment
 }

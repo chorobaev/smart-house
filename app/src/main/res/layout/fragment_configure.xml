@@ -14,13 +14,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toTopOf="@id/bt_mount">
+        app:layout_constraintBottom_toTopOf="@id/bt_connect">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_ssid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Redmi 5"
             android:hint="@string/config_hint_ssid"
             tools:ignore="Autofill" />
 
@@ -32,13 +31,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toTopOf="@id/bt_mount">
+        app:layout_constraintBottom_toTopOf="@id/bt_connect">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="mypassword"
             android:hint="@string/config_hint_password"
             tools:ignore="Autofill" />
 
@@ -54,7 +52,7 @@
         android:layout_marginBottom="-12dp"
         android:indeterminate="true"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/bt_mount" />
+        app:layout_constraintBottom_toTopOf="@id/bt_connect" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt_send"
@@ -63,7 +61,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/mount_btn_mount"
+        android:text="@string/mount_btn_set"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

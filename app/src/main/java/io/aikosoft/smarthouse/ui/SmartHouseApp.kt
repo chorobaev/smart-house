@@ -13,7 +13,6 @@ class SmartHouseApp : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        firebaseDatabase.setPersistenceEnabled(true)
         instance = this
     }
 

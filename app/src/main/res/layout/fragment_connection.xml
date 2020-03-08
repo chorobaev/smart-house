@@ -12,13 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        app:layout_constraintBottom_toTopOf="@id/bt_mount">
+        app:layout_constraintBottom_toTopOf="@id/bt_connect">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_module_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Smart House Liz"
             android:hint="@string/mount_hint_module_id"
             tools:ignore="Autofill" />
 
@@ -34,15 +33,15 @@
         android:layout_marginBottom="-12dp"
         android:indeterminate="true"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/bt_mount" />
+        app:layout_constraintBottom_toTopOf="@id/bt_connect" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt_mount"
+        android:id="@+id/bt_connect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/mount_btn_mount"
+        android:text="@string/mount_btn_connect"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

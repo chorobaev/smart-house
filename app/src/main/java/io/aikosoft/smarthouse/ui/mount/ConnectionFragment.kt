@@ -35,12 +35,12 @@ class ConnectionFragment : BaseFragment() {
     }
 
     private fun onPermissionsGranted() {
-        bt_mount.isEnabled = true
+        bt_connect.isEnabled = true
     }
 
     override fun initOnClicks() {
         super.initOnClicks()
-        bt_mount.setOnClickListener {
+        bt_connect.setOnClickListener {
             viewModel.connectToModule(et_module_id.text.toString())
         }
     }

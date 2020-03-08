@@ -67,7 +67,12 @@ class WiFiReceiverManager(private val application: Application, lifecycle: Lifec
                         val wifiInfo = wifiManager.connectionInfo
                         var wirelessNetworkName = wifiInfo.ssid
                         wirelessNetworkName = wirelessNetworkName.replace("\"", "")
-
+                        log("WiFi Info current SSID $wirelessNetworkName")
+                        log("WiFi Info Hidden " + wifiInfo.hiddenSSID )
+                        log("WiFi Connect To networkSSID $networkSSID")
+                        log("WiFi previous NetworkSSID $previousNetworkSSID")
+                        log("WiFi Names Equal " + (networkSSID == wirelessNetworkName))
+                        log("WiFi $disconnecting, NetworkSSID: $networkSSID;  Name: $wirelessNetworkName")
                         if (networkSSID == wirelessNetworkName && !disconnecting) {
                             log("WiFi connected to $networkSSID")
                             wifiResponse.value = WiFiResponse.connected()
@@ -116,7 +121,10 @@ class WiFiReceiverManager(private val application: Application, lifecycle: Lifec
 
         wifiResponse.value = WiFiResponse.connecting()
         if (!wifiManager.isWifiEnabled) {
-            wifiManager.isWifiEnabled = true
+            if (!wifiManager.setWifiEnabled(true)) {
+                wifiResponse.value = WiFiResponse.disconnected()
+                return
+            }
         }
 
         val wifiInfo = wifiManager.connectionInfo
