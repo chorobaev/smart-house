@@ -8,7 +8,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import io.aikosoft.smarthouse.R
 import io.aikosoft.smarthouse.base.BaseActivity
 import io.aikosoft.smarthouse.data.models.ModuleSmartHouseLiz
@@ -62,6 +61,13 @@ class MainActivity : BaseActivity() {
             loading.observe(lifeOwner, Observer {
                 progress_bar.visibility = it.toVisibility()
             })
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (viewModel.isLoggedIn) {
+            fetchModules()
         }
     }
 
