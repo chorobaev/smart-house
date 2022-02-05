@@ -44,7 +44,7 @@ by manufacturer Espressif Systems in Shanghai.
 5. **LED 3.3, V Button (any), Bread Board, connectors**.
 6. **Arduino IDE** - The open-source Arduino Software (IDE) makes it easy to write code and upload it to the board. 
 It runs on Windows, Mac OS X, and Linux.
-7. **Android Studio** - Android Studio is the official integrated development environment for Google's Android 
+7. **Android Studio** - Android Studio is the officially integrated development environment for Google's Android 
 operating system.
 8. **Google account**
 
@@ -73,15 +73,14 @@ operating system.
 This tutorial supposes that Arduino IDE is ready to use on your computer. Our first step is to make  ESP8266 be able to 
 operate in two different modes: Wi-Fi station, Wi-Fi access point.
 In  `Tools > Board`, make sure that the needed module was chosen. We need a Node MCU 1.0 (ESP-12E module). 
-After a successful connection to ESP-8266 from Arduino IDE clone 
-the repository from the link https://github.com/chorobaev/smart-house-esp8266-arduino. 
+After a successful connection to ESP-8266 from Arduino IDE go to the _arduino_ folder of the repository and open the file smart_house.ino.
 When you open the smart_house.ino file via Arduino IDE you see something like below at the beginning of the file.
     ```
     #define FIREBASE_HOST "FIREBASE-HOST-URL"
     #define FIREBASE_AUTH "FIREBASE-AUTH-TOKEN"
     ```
    Here you should replace `“FIREBASE-HOST-URL”` with your firebase project’s URL and `“FIREBASE-AUTH-TOKEN”` with 
-   your firebase projects’s auth token. They can be found on your projects setting page as below.
+   your firebase project’s auth token. They can be found on your projects setting page as below.
    
    ![firebase_settings](./images/Screen1.png)
    
@@ -113,7 +112,7 @@ When you open the smart_house.ino file via Arduino IDE you see something like be
    ![completed_module](./images/DSC_2119.JPG)
    
 ### Software part
-As it was mentioned before, one of the project’s goals is to let users to control the electricity of a home anywhere 
+As it was mentioned before, one of the project’s goals is to let users controlling the electricity of a home anywhere 
 via Internet. This is done by using an android application which can be installed to each android smartphone, 
 and applying _“Firebase Realtime Database”_ which provides the connection between ESP-8266 NodeMCU V3 and a mobile phone.
 
@@ -140,10 +139,11 @@ and applying _“Firebase Realtime Database”_ which provides the connection be
 4. Run android project
 
    ![android_files](./images/android.png)
+
    Copy just downloaded `“google-services.json”` file into your “app” directory of the android project. Then run 
    the app on your physical android device (emulator does not work as it cannot connect to WiFi access point). All done.
    
-   Here is how it looks! Press the `“+”` button to mount a module. In the appeared screen enter the name of the module 
+   Here is how it looks like! Press the `“+”` button to mount a module. In the appeared screen enter the name of the module 
    in our case it is
    
    ![screenshots](./images/screenshots.png)
